@@ -14,6 +14,7 @@
 #include <Wire.h>
 #include <U8g2lib.h>
 #include "config.h"
+#include "meshtastic_handler.h"
 
 // Initialize U8g2 for RAK1921 OLED (SSD1306, 128x64, I2C)
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE);
@@ -159,20 +160,15 @@ void setRelay(bool state) {
 
 /**
  * Send emergency signal via Meshtastic
- * Note: This is a placeholder for actual Meshtastic integration
- * In a real implementation, this would use the Meshtastic API
  */
 void sendEmergencySignal(const char* message) {
     Serial.print("Sending message: ");
     Serial.println(message);
     
-    // TODO: Implement actual Meshtastic message sending
-    // This would typically involve:
-    // 1. Creating a MeshPacket
-    // 2. Setting the payload to the message
-    // 3. Calling service.sendToMesh()
+    // Use the Meshtastic handler to send the message
+    MeshtasticHandler::sendMessage(message);
     
-    // For now, just log to serial
+    // Add to display
     addMessageToDisplay(String("SENT: ") + message);
 }
 
@@ -316,11 +312,8 @@ void setup() {
     // Initialize display
     initDisplay();
     
-    // TODO: Initialize Meshtastic
-    // This would involve:
-    // 1. Initializing the Meshtastic radio
-    // 2. Setting up message receive callbacks
-    // 3. Configuring the node settings
+    // Initialize Meshtastic handler
+    MeshtasticHandler::init();
     
     Serial.println("Setup complete - System ready");
     addMessageToDisplay("System Ready");
@@ -333,12 +326,17 @@ void loop() {
     // Check button state
     checkButton();
     
+    // Check for incoming Meshtastic messages
+    if (MeshtasticHandler::hasNewMessage()) {
+        const char* message = MeshtasticHandler::getLastMessage();
+        const char* senderKey = MeshtasticHandler::getLastSenderPublicKey();
+        
+        processIncomingMessage(message, senderKey);
+        MeshtasticHandler::markMessageProcessed();
+    }
+    
     // Update display
     updateDisplay();
-    
-    // TODO: Process Meshtastic messages
-    // In actual implementation, messages would be received via callbacks
-    // and processIncomingMessage() would be called from there
     
     // Small delay to prevent CPU hogging
     delay(10);
