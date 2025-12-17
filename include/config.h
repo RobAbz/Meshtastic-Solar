@@ -17,6 +17,8 @@
 #define MAX_DISPLAY_LINES 7           // Maximum lines on display (64px / 8px font = 8, reserve 1 for header)
 #define LINE_HEIGHT 9                 // 8px font + 1px spacing
 #define HEADER_HEIGHT 10              // Height reserved for header
+#define MAX_DISPLAY_CHARS 21          // Maximum characters per line on display
+#define TRUNCATE_CHARS 18             // Characters to keep when truncating (leaving room for "...")
 
 // Emergency Signal Messages
 #define EMERGENCY_ON_MSG "Emergency_signal ON"

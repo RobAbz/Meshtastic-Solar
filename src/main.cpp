@@ -130,7 +130,7 @@ void checkButton() {
 void handleButtonPress() {
     Serial.println("Emergency button pressed!");
     
-    // Toggle relay state
+    // Activate relay (button always triggers ON, OFF comes via message)
     setRelay(true);
     
     // Send emergency ON signal
@@ -273,10 +273,12 @@ void updateDisplay() {
     int yPos = HEADER_HEIGHT + 3;
     int displayedMessages = 0;
     
-    // Remove expired messages
+    // Remove expired messages (using time difference to handle overflow)
     for (int i = 0; i < MAX_DISPLAY_LINES; i++) {
         if (messageBuffer[i].active) {
-            if (currentTime - messageBuffer[i].timestamp > MESSAGE_DISPLAY_TIME_MS) {
+            // Use subtraction for safe overflow handling
+            unsigned long timeDiff = currentTime - messageBuffer[i].timestamp;
+            if (timeDiff > MESSAGE_DISPLAY_TIME_MS) {
                 messageBuffer[i].active = false;
             }
         }
@@ -290,8 +292,8 @@ void updateDisplay() {
             
             // Truncate message if too long
             String displayText = messageBuffer[idx].text;
-            if (displayText.length() > 21) {  // Approximately 21 chars fit on 128px width
-                displayText = displayText.substring(0, 18) + "...";
+            if (displayText.length() > MAX_DISPLAY_CHARS) {
+                displayText = displayText.substring(0, TRUNCATE_CHARS) + "...";
             }
             
             u8g2.drawStr(2, yPos, displayText.c_str());
