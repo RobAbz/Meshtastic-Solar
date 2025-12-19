@@ -1,0 +1,39 @@
+# PlatformIO
+.pio
+.vscode/.browse.c_cpp.db*
+.vscode/launch.json
+.vscode/ipch
+
+# Build artifacts
+*.bin
+*.hex
+*.elf
+*.map
+*.uf2
+
+# IDE - exclude most .vscode files but keep IntelliSense configs
+.vscode/*
+!.vscode/c_cpp_properties.json
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Web assets (generated)
+data/
