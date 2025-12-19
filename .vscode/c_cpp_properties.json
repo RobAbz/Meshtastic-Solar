@@ -1,0 +1,42 @@
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/.pio/libdeps/rak4631/**",
+                "${platformio.packages_dir}/framework-arduinoadafruitnrf52/**",
+                "${platformio.packages_dir}/toolchain-gccarmnoneeabi/**"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/include",
+                    "${workspaceFolder}/src",
+                    "${workspaceFolder}/.pio/libdeps/rak4631",
+                    "${platformio.packages_dir}/framework-arduinoadafruitnrf52",
+                    "${platformio.packages_dir}/toolchain-gccarmnoneeabi"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "defines": [
+                "RAK4631",
+                "BOARD_RAK4631",
+                "NRF52_SERIES",
+                "NRF52840_XXAA",
+                "CONFIG_NFCT_PINS_AS_GPIOS",
+                "CONFIG_GPIO_AS_PINRESET",
+                "USBCON",
+                "USB_VID=0x239A",
+                "USB_PID=0x8029",
+                "ARDUINO_NRF52_ADAFRUIT",
+                "SILVERTIME_COPYRIGHT"
+            ],
+            "compilerPath": "${platformio.packages_dir}/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}
